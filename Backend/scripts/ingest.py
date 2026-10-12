@@ -6,9 +6,10 @@ Usage (from the repo root):
 Re-running is safe: the collection is wiped and rebuilt each time, so you never
 get duplicate chunks. Run it again whenever you add or edit documents.
 """
-import sys 
+
+import sys
 import time
-from pathlib import Path 
+from pathlib import Path
 
 # Make `import src...` work when run as `python scripts/ingest.py`.
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
@@ -20,7 +21,9 @@ from src.loader import load_documents  # noqa: E402
 from src.vector_store import add_chunks, count, get_collection  # noqa: E402
 
 
-def ingest(docs_dir=DOCS_DIR, chroma_dir=CHROMA_DIR, embed_fn=embed_texts, collection=None) -> dict:
+def ingest(
+    docs_dir=DOCS_DIR, chroma_dir=CHROMA_DIR, embed_fn=embed_texts, collection=None
+) -> dict:
     """Run the full ingestion pipeline and return a summary.
 
     embed_fn and collection can be injected (used by the tests); in normal use
