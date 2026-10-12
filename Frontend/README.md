@@ -5,3 +5,4 @@ Vite + React app for the compliance search UI. Install and run instructions are 
 # demo
 
 [![Open in Bolt](https://bolt.new/static/open-in-bolt.svg)](https://bolt.new/~/sb1-gtfjorg2)
+ 
