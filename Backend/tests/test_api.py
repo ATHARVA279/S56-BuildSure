@@ -1,4 +1,5 @@
 """API tests use the in-memory store and a keyword embedder. No Atlas or Groq calls."""
+
 import json
 
 import pytest
@@ -34,14 +35,18 @@ def vector_for(text: str) -> list[float]:
 
 @pytest.fixture
 def api(monkeypatch):
-    monkeypatch.setattr("src.main.embed_texts", lambda texts: [vector_for(text) for text in texts])
+    monkeypatch.setattr(
+        "src.main.embed_texts", lambda texts: [vector_for(text) for text in texts]
+    )
     monkeypatch.setattr("src.retriever.embed_query", vector_for)
     with TestClient(app) as client:
         yield client
 
 
 def create_project(api, name="Project Alpha", location="Site 44"):
-    response = api.post("/api/projects", json={"project_name": name, "location": location})
+    response = api.post(
+        "/api/projects", json={"project_name": name, "location": location}
+    )
     assert response.status_code == 200, response.text
     return response.json()
 
@@ -90,28 +95,44 @@ def test_upload_validation_and_failed_records_are_not_indexed(api, monkeypatch):
     not_pdf = api.post(
         "/api/documents/upload",
         files={"file": ("notes.txt", b"hello", "text/plain")},
-        data={"project_id": project["id"], "scope": "project", "doc_type": "building_code"},
+        data={
+            "project_id": project["id"],
+            "scope": "project",
+            "doc_type": "building_code",
+        },
     )
     assert not_pdf.status_code == 400
 
     empty = api.post(
         "/api/documents/upload",
         files={"file": ("empty.pdf", b"", "application/pdf")},
-        data={"project_id": project["id"], "scope": "project", "doc_type": "building_code"},
+        data={
+            "project_id": project["id"],
+            "scope": "project",
+            "doc_type": "building_code",
+        },
     )
     assert empty.status_code == 400
 
     malformed = api.post(
         "/api/documents/upload",
         files={"file": ("bad.pdf", b"%PDF-1.4\nthis is not a pdf", "application/pdf")},
-        data={"project_id": project["id"], "scope": "project", "doc_type": "building_code"},
+        data={
+            "project_id": project["id"],
+            "scope": "project",
+            "doc_type": "building_code",
+        },
     )
     assert malformed.status_code in {400, 422}
 
     scanned = api.post(
         "/api/documents/upload",
         files={"file": ("scan.pdf", blank_pdf(), "application/pdf")},
-        data={"project_id": project["id"], "scope": "project", "doc_type": "building_code"},
+        data={
+            "project_id": project["id"],
+            "scope": "project",
+            "doc_type": "building_code",
+        },
     )
     assert scanned.status_code == 422
     assert "OCR is not implemented" in scanned.json()["detail"]
@@ -140,7 +161,11 @@ def test_upload_validation_and_failed_records_are_not_indexed(api, monkeypatch):
     too_big = api.post(
         "/api/documents/upload",
         files={"file": ("big.pdf", b"%PDF" + b"x" * 80, "application/pdf")},
-        data={"project_id": project["id"], "scope": "project", "doc_type": "building_code"},
+        data={
+            "project_id": project["id"],
+            "scope": "project",
+            "doc_type": "building_code",
+        },
     )
     assert too_big.status_code == 413
     monkeypatch.setattr("src.ingestion.MAX_UPLOAD_BYTES", 25 * 1024 * 1024)
@@ -187,7 +212,9 @@ def test_search_workflow_citations_filters_isolation_and_deficiencies(api):
     spec = upload(
         api,
         "alpha_spec.pdf",
-        ["Section 8.1 Corridor\nSPECWIDTHTOKEN Project corridor minimum is stated here."],
+        [
+            "Section 8.1 Corridor\nSPECWIDTHTOKEN Project corridor minimum is stated here."
+        ],
         project_id=alpha["id"],
         scope="project",
         doc_type="specification",
@@ -198,7 +225,9 @@ def test_search_workflow_citations_filters_isolation_and_deficiencies(api):
     opened = upload(
         api,
         "alpha_inspection.pdf",
-        ["Finding B-1 Width\nEXITWIDTHTOKEN measured below the stated width. Status: open."],
+        [
+            "Finding B-1 Width\nEXITWIDTHTOKEN measured below the stated width. Status: open."
+        ],
         project_id=alpha["id"],
         scope="project",
         doc_type="inspection_report",
@@ -243,7 +272,11 @@ def test_search_workflow_citations_filters_isolation_and_deficiencies(api):
 
     width = api.post(
         "/api/search",
-        json={"query": "What does EXITWIDTHTOKEN require?", "project_id": alpha["id"], "doc_type_filter": "All"},
+        json={
+            "query": "What does EXITWIDTHTOKEN require?",
+            "project_id": alpha["id"],
+            "doc_type_filter": "All",
+        },
     )
     assert width.status_code == 200, width.text
     body = width.json()
@@ -274,24 +307,40 @@ def test_search_workflow_citations_filters_isolation_and_deficiencies(api):
         },
     ).json()
     assert codes_only["has_deficiency"] is False
-    assert {card["doc_name"] for card in codes_only["source_cards"]} == {"fire_code.pdf"}
+    assert {card["doc_name"] for card in codes_only["source_cards"]} == {
+        "fire_code.pdf"
+    }
 
     rebar = api.post(
         "/api/search",
-        json={"query": "REBARTOKEN spacing", "project_id": alpha["id"], "doc_type_filter": "building_code"},
+        json={
+            "query": "REBARTOKEN spacing",
+            "project_id": alpha["id"],
+            "doc_type_filter": "building_code",
+        },
     ).json()
     assert rebar["source_cards"][0]["page_number"] == 2
     assert "150 mm" in rebar["source_cards"][0]["quote"]
 
     specs_only = api.post(
         "/api/search",
-        json={"query": "SPECWIDTHTOKEN", "project_id": alpha["id"], "doc_type_filter": "specification"},
+        json={
+            "query": "SPECWIDTHTOKEN",
+            "project_id": alpha["id"],
+            "doc_type_filter": "specification",
+        },
     ).json()
-    assert {card["doc_name"] for card in specs_only["source_cards"]} == {"alpha_spec.pdf"}
+    assert {card["doc_name"] for card in specs_only["source_cards"]} == {
+        "alpha_spec.pdf"
+    }
 
     closed_hit = api.post(
         "/api/search",
-        json={"query": "CLOSEDTOKEN", "project_id": alpha["id"], "doc_type_filter": "inspection_report"},
+        json={
+            "query": "CLOSEDTOKEN",
+            "project_id": alpha["id"],
+            "doc_type_filter": "inspection_report",
+        },
     ).json()
     assert closed_hit["has_deficiency"] is False
     assert closed_hit["deficiency_text"] is None
@@ -300,7 +349,11 @@ def test_search_workflow_citations_filters_isolation_and_deficiencies(api):
 
     unverified_hit = api.post(
         "/api/search",
-        json={"query": "UNVERIFIEDTOKEN", "project_id": alpha["id"], "doc_type_filter": "inspection_report"},
+        json={
+            "query": "UNVERIFIEDTOKEN",
+            "project_id": alpha["id"],
+            "doc_type_filter": "inspection_report",
+        },
     ).json()
     assert unverified_hit["has_deficiency"] is False
     assert unverified_hit["deficiency_status"] == "requires_verification"
@@ -308,7 +361,11 @@ def test_search_workflow_citations_filters_isolation_and_deficiencies(api):
 
     hidden = api.post(
         "/api/search",
-        json={"query": "BETAONLYTOKEN", "project_id": alpha["id"], "doc_type_filter": "All"},
+        json={
+            "query": "BETAONLYTOKEN",
+            "project_id": alpha["id"],
+            "doc_type_filter": "All",
+        },
     )
     assert hidden.status_code == 200
     hidden_body = hidden.json()
@@ -319,36 +376,59 @@ def test_search_workflow_citations_filters_isolation_and_deficiencies(api):
 
     visible_to_beta = api.post(
         "/api/search",
-        json={"query": "BETAONLYTOKEN", "project_id": beta["id"], "doc_type_filter": "All"},
+        json={
+            "query": "BETAONLYTOKEN",
+            "project_id": beta["id"],
+            "doc_type_filter": "All",
+        },
     ).json()
     assert visible_to_beta["source_cards"][0]["doc_name"] == "beta_secret.pdf"
 
     global_from_beta = api.post(
         "/api/search",
-        json={"query": "REBARTOKEN", "project_id": beta["id"], "doc_type_filter": "building_code"},
+        json={
+            "query": "REBARTOKEN",
+            "project_id": beta["id"],
+            "doc_type_filter": "building_code",
+        },
     ).json()
     assert global_from_beta["source_cards"][0]["doc_name"] == "fire_code.pdf"
 
     alpha_spec_hidden = api.post(
         "/api/search",
-        json={"query": "SPECWIDTHTOKEN", "project_id": beta["id"], "doc_type_filter": "All"},
+        json={
+            "query": "SPECWIDTHTOKEN",
+            "project_id": beta["id"],
+            "doc_type_filter": "All",
+        },
     ).json()
     assert alpha_spec_hidden["ai_summary"] == NO_EVIDENCE
 
-    unknown = api.post("/api/search", json={"query": "completely unrelated pottery", "project_id": alpha["id"]})
+    unknown = api.post(
+        "/api/search",
+        json={"query": "completely unrelated pottery", "project_id": alpha["id"]},
+    )
     assert unknown.status_code == 200
     assert unknown.json()["ai_summary"] == NO_EVIDENCE
 
-    missing_project = api.post("/api/search", json={"query": "EXITWIDTHTOKEN", "project_id": "proj-missing"})
+    missing_project = api.post(
+        "/api/search", json={"query": "EXITWIDTHTOKEN", "project_id": "proj-missing"}
+    )
     assert missing_project.status_code == 404
 
     bad_filter = api.post(
         "/api/search",
-        json={"query": "EXITWIDTHTOKEN", "project_id": alpha["id"], "doc_type_filter": "novel"},
+        json={
+            "query": "EXITWIDTHTOKEN",
+            "project_id": alpha["id"],
+            "doc_type_filter": "novel",
+        },
     )
     assert bad_filter.status_code == 400
 
-    empty_query = api.post("/api/search", json={"query": "   ", "project_id": alpha["id"]})
+    empty_query = api.post(
+        "/api/search", json={"query": "   ", "project_id": alpha["id"]}
+    )
     assert empty_query.status_code == 400
 
 
@@ -365,22 +445,44 @@ def test_project_pdf_is_not_readable_from_another_project(api):
     )
     doc_id = uploaded.json()["doc_id"]
     assert api.get(f"/api/documents/{doc_id}/file").status_code == 404
-    assert api.get(f"/api/documents/{doc_id}/file", params={"project_id": beta["id"]}).status_code == 404
-    allowed = api.get(f"/api/documents/{doc_id}/file", params={"project_id": alpha["id"]})
+    assert (
+        api.get(
+            f"/api/documents/{doc_id}/file", params={"project_id": beta["id"]}
+        ).status_code
+        == 404
+    )
+    allowed = api.get(
+        f"/api/documents/{doc_id}/file", params={"project_id": alpha["id"]}
+    )
     assert allowed.status_code == 200
     assert allowed.content.startswith(b"%PDF")
     assert api.get("/api/documents/doc_zzzzzzzz/file").status_code == 404
     assert api.get("/api/documents/doc_abcd1234/file").status_code == 404
     removed = api.delete(f"/api/documents/{doc_id}", params={"project_id": beta["id"]})
     assert removed.status_code == 404
-    assert api.delete(f"/api/documents/{doc_id}", params={"project_id": alpha["id"]}).status_code == 200
-    assert api.get(f"/api/documents/{doc_id}/file", params={"project_id": alpha["id"]}).status_code == 404
+    assert (
+        api.delete(
+            f"/api/documents/{doc_id}", params={"project_id": alpha["id"]}
+        ).status_code
+        == 200
+    )
+    assert (
+        api.get(
+            f"/api/documents/{doc_id}/file", params={"project_id": alpha["id"]}
+        ).status_code
+        == 404
+    )
 
 
 def test_env_example_has_no_live_credentials():
     from pathlib import Path
 
-    text = Path(__file__).resolve().parent.parent.joinpath(".env.example").read_text(encoding="utf-8")
+    text = (
+        Path(__file__)
+        .resolve()
+        .parent.parent.joinpath(".env.example")
+        .read_text(encoding="utf-8")
+    )
     assert "GROQ_API_KEY=" in text
     assert "MONGODB_URI=" in text
     assert "gsk_" not in text
