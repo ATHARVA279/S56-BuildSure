@@ -7,7 +7,7 @@
 
 ---
 
-## 1. Overview
+## 1. Overview 
 
 RegFind is a Retrieval-Augmented Generation (RAG) application. A site engineer asks a plain-English compliance question, the system finds the most relevant clauses from a fixed set of building codes, specifications and inspection reports, and an LLM writes a short answer grounded **only** in those clauses, with the source document cited.
 

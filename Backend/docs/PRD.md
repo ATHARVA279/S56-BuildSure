@@ -9,7 +9,7 @@
 ## Document Control
 
 | Field | Detail |
-|---|---|
+|---|---| 
 | Team | Team 03 |
 | Sprint | Sprint 2 — AI Application (RAG) |
 | Phase | Phase 2 — PRD |
