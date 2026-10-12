@@ -1,6 +1,14 @@
-import { useState, useRef, useEffect } from 'react';
-import { Building2, ChevronDown, Files, Plus, Check, Globe, FolderOpen } from 'lucide-react';
-import type { Project } from '@/types';
+import { useState, useRef, useEffect } from "react";
+import {
+  Building2,
+  ChevronDown,
+  Files,
+  Plus,
+  Check,
+  Globe,
+  FolderOpen,
+} from "lucide-react";
+import type { Project } from "@/types";
 
 interface Props {
   projects: Project[];
@@ -22,18 +30,21 @@ export default function Header({
 
   useEffect(() => {
     function handler(e: MouseEvent) {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(e.target as Node)
+      ) {
         setDropdownOpen(false);
       }
     }
-    document.addEventListener('mousedown', handler);
-    return () => document.removeEventListener('mousedown', handler);
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
   }, []);
 
   const activeProject = projects.find((p) => p.id === activeProjectId);
   const displayLabel = activeProject?.isGlobal
-    ? 'Global Repository'
-    : activeProject?.name ?? 'Select Project';
+    ? "Global Repository"
+    : (activeProject?.name ?? "Select Project");
 
   return (
     <header className="fixed top-0 left-0 right-0 z-40 bg-slate-950 border-b border-slate-800 shadow-md">
@@ -44,8 +55,12 @@ export default function Header({
             <Building2 className="w-5 h-5 text-slate-950" strokeWidth={2.5} />
           </div>
           <div className="flex items-baseline">
-            <span className="text-white font-extrabold text-base tracking-tight font-mono">Build</span>
-            <span className="text-amber-400 font-extrabold text-base tracking-tight font-mono">Sure</span>
+            <span className="text-white font-extrabold text-base tracking-tight font-mono">
+              Build
+            </span>
+            <span className="text-amber-400 font-extrabold text-base tracking-tight font-mono">
+              Sure
+            </span>
           </div>
           <span className="hidden sm:inline-flex items-center ml-1 px-2 py-0.5 rounded-md text-[10px] font-mono font-bold bg-slate-800 text-amber-400 border border-slate-700 uppercase tracking-widest">
             FIELD OPS
@@ -65,7 +80,7 @@ export default function Header({
                 {displayLabel}
               </span>
               <ChevronDown
-                className={`w-4 h-4 text-slate-400 transition-transform ${dropdownOpen ? 'rotate-180' : ''}`}
+                className={`w-4 h-4 text-slate-400 transition-transform ${dropdownOpen ? "rotate-180" : ""}`}
               />
             </button>
 
@@ -80,7 +95,9 @@ export default function Header({
                 <div className="max-h-72 overflow-y-auto divide-y divide-slate-800/60">
                   {projects.map((project) => {
                     const isActive = project.id === activeProjectId;
-                    const label = project.isGlobal ? 'Global Repository' : project.name;
+                    const label = project.isGlobal
+                      ? "Global Repository"
+                      : project.name;
                     return (
                       <button
                         key={project.id}
@@ -89,7 +106,9 @@ export default function Header({
                           setDropdownOpen(false);
                         }}
                         className={`w-full min-h-[44px] flex items-center gap-3 px-3.5 py-2.5 text-left hover:bg-slate-800 transition-colors ${
-                          isActive ? 'bg-slate-800/80 border-l-2 border-l-amber-500' : ''
+                          isActive
+                            ? "bg-slate-800/80 border-l-2 border-l-amber-500"
+                            : ""
                         }`}
                       >
                         <div className="w-7 h-7 rounded-md flex items-center justify-center shrink-0 bg-slate-800 border border-slate-700">
@@ -100,12 +119,18 @@ export default function Header({
                           )}
                         </div>
                         <div className="flex-1 min-w-0">
-                          <p className="text-xs font-semibold text-slate-100 truncate">{label}</p>
+                          <p className="text-xs font-semibold text-slate-100 truncate">
+                            {label}
+                          </p>
                           {project.location && (
-                            <p className="text-[11px] text-slate-400 truncate">{project.location}</p>
+                            <p className="text-[11px] text-slate-400 truncate">
+                              {project.location}
+                            </p>
                           )}
                         </div>
-                        {isActive && <Check className="w-4 h-4 text-amber-400 shrink-0" />}
+                        {isActive && (
+                          <Check className="w-4 h-4 text-amber-400 shrink-0" />
+                        )}
                       </button>
                     );
                   })}
