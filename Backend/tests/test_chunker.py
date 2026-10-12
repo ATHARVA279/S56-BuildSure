@@ -28,7 +28,9 @@ def test_chunk_keeps_metadata_and_clause_text():
 
 
 def test_long_clause_is_split_with_overlap():
-    long_doc = dict(DOC, text="Section 9.1 Long\n" + " ".join(f"w{i}" for i in range(100)))
+    long_doc = dict(
+        DOC, text="Section 9.1 Long\n" + " ".join(f"w{i}" for i in range(100))
+    )
     chunks = chunk_document(long_doc, size=40, overlap=10)
     assert len(chunks) == 3
     assert "w99" in chunks[-1]["text"]  # nothing dropped at the end
@@ -39,13 +41,19 @@ def test_long_clause_is_split_with_overlap():
 
 
 def test_no_headings_falls_back_to_whole_text():
-    plain = {"source": "notes.txt", "title": "NOTES", "doc_type": "unknown", "text": "NOTES\nJust some text."}
+    plain = {
+        "source": "notes.txt",
+        "title": "NOTES",
+        "doc_type": "unknown",
+        "text": "NOTES\nJust some text.",
+    }
     chunks = chunk_document(plain)
     assert len(chunks) == 1 and "Just some text." in chunks[0]["text"]
 
 
 def test_sample_docs_chunk_into_clauses():
     from src.loader import load_documents
+
     docs = load_documents()
     chunks = chunk_documents(docs)
     assert len(chunks) > len(docs)
@@ -127,12 +135,22 @@ def test_section_continuing_onto_the_next_page_keeps_its_id():
         "doc_type": "building_code",
         "page_count": 2,
         "pages": [
-            {"page_number": 1, "text": "Section 7.2 Exit Width\nThe clear width shall be at least 1.0 m."},
-            {"page_number": 2, "text": "Measured at the narrowest point.\nSection 7.3 Travel\nMaximum 30 m."},
+            {
+                "page_number": 1,
+                "text": "Section 7.2 Exit Width\nThe clear width shall be at least 1.0 m.",
+            },
+            {
+                "page_number": 2,
+                "text": "Measured at the narrowest point.\nSection 7.3 Travel\nMaximum 30 m.",
+            },
         ],
     }
     chunks = chunk_document(doc)
-    continued = [chunk for chunk in chunks if chunk["section_id"] == "7.2" and chunk["page_number"] == 2]
+    continued = [
+        chunk
+        for chunk in chunks
+        if chunk["section_id"] == "7.2" and chunk["page_number"] == 2
+    ]
     assert continued and "narrowest" in continued[0]["quote"]
     travel = [chunk for chunk in chunks if chunk["section_id"] == "7.3"]
     assert travel[0]["page_number"] == 2
