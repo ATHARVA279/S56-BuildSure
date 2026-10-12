@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { X, MapPin, FolderPlus } from 'lucide-react';
+import { useState } from "react";
+import { X, MapPin, FolderPlus } from "lucide-react";
 
 interface Props {
   onClose: () => void;
@@ -7,8 +7,8 @@ interface Props {
 }
 
 export default function CreateProjectModal({ onClose, onCreate }: Props) {
-  const [name, setName] = useState('');
-  const [location, setLocation] = useState('');
+  const [name, setName] = useState("");
+  const [location, setLocation] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
 
@@ -21,7 +21,9 @@ export default function CreateProjectModal({ onClose, onCreate }: Props) {
       await onCreate({ name: name.trim(), location: location.trim() });
       onClose();
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Could not create the project');
+      setError(
+        err instanceof Error ? err.message : "Could not create the project",
+      );
     } finally {
       setSaving(false);
     }
@@ -29,17 +31,27 @@ export default function CreateProjectModal({ onClose, onCreate }: Props) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-3">
-      <div className="absolute inset-0 bg-slate-950/70 backdrop-blur-xs" onClick={onClose} />
+      <div
+        className="absolute inset-0 bg-slate-950/70 backdrop-blur-xs"
+        onClick={onClose}
+      />
       <div className="relative w-full max-w-md bg-white rounded-md border-2 border-slate-700 shadow-2xl overflow-hidden">
         {/* Header */}
         <div className="bg-slate-950 px-5 py-4 flex items-center justify-between border-b border-slate-800">
           <div className="flex items-center gap-2.5">
             <div className="w-8 h-8 bg-amber-500 rounded-md flex items-center justify-center border border-amber-600">
-              <FolderPlus className="w-4 h-4 text-slate-950" strokeWidth={2.5} />
+              <FolderPlus
+                className="w-4 h-4 text-slate-950"
+                strokeWidth={2.5}
+              />
             </div>
             <div>
-              <p className="text-[10px] font-mono font-bold text-amber-400 uppercase tracking-widest">CONFIGURATION</p>
-              <h2 className="text-white font-mono font-bold text-sm uppercase">NEW FIELD WORKSPACE</h2>
+              <p className="text-[10px] font-mono font-bold text-amber-400 uppercase tracking-widest">
+                CONFIGURATION
+              </p>
+              <h2 className="text-white font-mono font-bold text-sm uppercase">
+                NEW FIELD WORKSPACE
+              </h2>
             </div>
           </div>
           <button
@@ -83,7 +95,10 @@ export default function CreateProjectModal({ onClose, onCreate }: Props) {
           </div>
 
           {error && (
-            <p className="text-xs font-mono font-bold text-red-700" role="alert">
+            <p
+              className="text-xs font-mono font-bold text-red-700"
+              role="alert"
+            >
               {error}
             </p>
           )}
@@ -101,7 +116,7 @@ export default function CreateProjectModal({ onClose, onCreate }: Props) {
               disabled={!name.trim() || saving}
               className="min-h-[44px] flex-1 px-4 py-2 rounded-md bg-amber-500 text-slate-950 font-mono font-bold text-xs uppercase tracking-wider hover:bg-amber-400 active:bg-amber-600 disabled:opacity-40 disabled:cursor-not-allowed border border-amber-600 shadow-xs transition-colors"
             >
-              {saving ? 'SAVING' : 'INITIALIZE WORKSPACE'}
+              {saving ? "SAVING" : "INITIALIZE WORKSPACE"}
             </button>
           </div>
         </form>
