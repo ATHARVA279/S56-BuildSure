@@ -1,4 +1,5 @@
 """Tests use a fake model so they run instantly and offline."""
+
 import sys
 
 import numpy as np
