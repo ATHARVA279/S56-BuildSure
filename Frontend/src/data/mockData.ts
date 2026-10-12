@@ -1,3 +1,4 @@
+// Offline demonstration fixtures. The running application does not read this file.
 import type { Project, Document, SearchResult, AISummary } from '@/types';
 
 export const PROJECTS: Project[] = [

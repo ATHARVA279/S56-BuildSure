@@ -1,7 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { Building2, ChevronDown, Files, Plus, Check, Globe, FolderOpen } from 'lucide-react';
 import type { Project } from '@/types';
-import { PROJECT_LABELS } from '@/data/mockData';
 
 interface Props {
   projects: Project[];
@@ -32,7 +31,9 @@ export default function Header({
   }, []);
 
   const activeProject = projects.find((p) => p.id === activeProjectId);
-  const displayLabel = PROJECT_LABELS[activeProjectId] ?? activeProject?.name ?? 'Select Project';
+  const displayLabel = activeProject?.isGlobal
+    ? 'Global Repository'
+    : activeProject?.name ?? 'Select Project';
 
   return (
     <header className="fixed top-0 left-0 right-0 z-40 bg-slate-950 border-b border-slate-800 shadow-md">
@@ -79,7 +80,7 @@ export default function Header({
                 <div className="max-h-72 overflow-y-auto divide-y divide-slate-800/60">
                   {projects.map((project) => {
                     const isActive = project.id === activeProjectId;
-                    const label = PROJECT_LABELS[project.id] ?? project.name;
+                    const label = project.isGlobal ? 'Global Repository' : project.name;
                     return (
                       <button
                         key={project.id}

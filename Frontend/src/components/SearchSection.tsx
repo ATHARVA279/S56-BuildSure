@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import { Search, Layers, FolderOpen, ClipboardList, BookOpen, X } from 'lucide-react';
 import type { ScopeFilter } from '@/types';
-import { PROJECT_LABELS } from '@/data/mockData';
 
 interface Props {
   activeProjectId: string;
+  projectName: string;
   onSearch: (query: string, scope: ScopeFilter) => void;
   initialQuery?: string;
   initialScope?: ScopeFilter;
+  loading?: boolean;
 }
 
 const SCOPE_OPTIONS: { id: ScopeFilter; label: string; icon: React.ReactNode }[] = [
@@ -27,18 +28,19 @@ const SUGGESTED = [
 
 export default function SearchSection({
   activeProjectId,
+  projectName,
   onSearch,
   initialQuery = '',
   initialScope = 'all',
+  loading = false,
 }: Props) {
   const [query, setQuery] = useState(initialQuery);
   const [scope, setScope] = useState<ScopeFilter>(initialScope);
 
   const isGlobal = activeProjectId === 'global';
-  const projectLabel = PROJECT_LABELS[activeProjectId] ?? 'Project';
   const scopeDescription = isGlobal
     ? 'Searching across: Global Building Codes Only'
-    : `Searching across: ${projectLabel.split(' - ')[0]} Docs + Global Building Codes`;
+    : `Searching across: ${projectName} Docs + Global Building Codes`;
 
   function handleSubmit(e?: React.FormEvent) {
     e?.preventDefault();
@@ -87,10 +89,10 @@ export default function SearchSection({
             <div className="pr-1.5 py-1.5 shrink-0">
               <button
                 type="submit"
-                disabled={!query.trim()}
+                disabled={!query.trim() || loading}
                 className="min-h-[44px] px-5 rounded-md bg-amber-500 hover:bg-amber-400 active:bg-amber-600 disabled:opacity-40 disabled:cursor-not-allowed text-slate-950 font-mono font-bold text-xs uppercase tracking-wider transition-all border border-amber-600 shadow-xs flex items-center gap-1.5"
               >
-                SEARCH
+                {loading ? 'SEARCHING' : 'SEARCH'}
               </button>
             </div>
           </div>
