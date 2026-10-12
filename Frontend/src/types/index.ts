@@ -14,6 +14,8 @@ export interface Document {
   pages: number;
   size: string;
   uploadedAt: string;
+  processingStatus?: string;
+  statusDetail?: string;
 }
 
 export type ScopeFilter = 'all' | 'project-specs' | 'inspection-reports' | 'building-codes';
@@ -28,6 +30,10 @@ export interface SearchResult {
   snippet: string;
   scope: 'global' | 'local';
   category: 'building-code' | 'project-spec' | 'inspection-report';
+  pdfUrl?: string;
+  pageCount?: number;
+  score?: number;
+  findingStatus?: 'open' | 'closed' | 'unverified' | 'none';
 }
 
 export interface AISummary {

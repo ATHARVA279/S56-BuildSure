@@ -1,5 +1,7 @@
 # BuildSure — RegFind
 
+The running application is the FastAPI service in this folder and the Vite app in `../Frontend`. Setup, environment variables, and tests are in the [repository README](../README.md). The notes below describe the original sample-document pipeline. `scripts/ingest.py` still targets ChromaDB and is not what the API uses; seed the API store with `python scripts/seed_repository.py`.
+
 An AI compliance assistant for construction site engineers. Ask a plain-English
 question and get the applicable regulation, with the source document and clause cited.
 

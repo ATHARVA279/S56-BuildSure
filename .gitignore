@@ -1,5 +1,13 @@
-# Secrets
+# Local notes. Not part of the shared repository.
+docs/
+
+# Secrets. .env.example is safe to commit; real credentials are not.
 .env
+Backend/.env
+**/.env
+!**/.env.example
+atlas-credentials.env
+**/atlas-credentials.env
 
 # Python
 venv/
@@ -8,8 +16,10 @@ __pycache__/
 *.pyc
 .pytest_cache/
 
-# Local vector database
+# Local vector database and uploaded originals
 chroma_db/
+Backend/data/uploads/
+Backend/data/local_db/
 
 # OS / editor
 .DS_Store

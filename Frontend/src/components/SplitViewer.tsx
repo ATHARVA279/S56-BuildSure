@@ -1,23 +1,38 @@
 import { useState } from 'react';
 import { X, ArrowLeft, Globe, FolderOpen, ChevronLeft, ChevronRight, ZoomIn, ZoomOut, Download, BookOpen, AlertTriangle } from 'lucide-react';
 import type { SearchResult, AISummary } from '@/types';
-import { PDF_MOCK_PAGES } from '@/data/mockData';
 
 interface Props {
   result: SearchResult;
   aiSummary: AISummary;
+  hasDeficiency?: boolean;
+  deficiencyText?: string | null;
   onClose: () => void;
 }
 
-export default function SplitViewer({ result, aiSummary, onClose }: Props) {
+function withPage(url: string, page: number) {
+  const base = url.split('#')[0].replace(/([?&])page=\d+/, '');
+  const trimmed = base.endsWith('?') || base.endsWith('&') ? base.slice(0, -1) : base;
+  const joiner = trimmed.includes('?') ? '&' : '?';
+  return `${trimmed}${joiner}page=${page}#page=${page}`;
+}
+
+export default function SplitViewer({
+  result,
+  aiSummary,
+  hasDeficiency = false,
+  deficiencyText = null,
+  onClose,
+}: Props) {
   const [page, setPage] = useState(result.page);
   const [zoom, setZoom] = useState(1);
 
   const isProject = result.scope === 'local';
-  const mockPage = PDF_MOCK_PAGES[result.id];
   const relevantCitations = aiSummary.citations.filter(
     (c) => c.documentName === result.documentName
   );
+  const lastPage = result.pageCount && result.pageCount > 0 ? result.pageCount : undefined;
+  const pdfSrc = result.pdfUrl ? withPage(result.pdfUrl, page) : '';
 
   return (
     <div className="fixed inset-0 z-50 bg-slate-950 flex flex-col font-sans">
@@ -70,12 +85,15 @@ export default function SplitViewer({ result, aiSummary, onClose }: Props) {
               <ZoomIn className="w-4 h-4" />
             </button>
           </div>
-          <button
-            className="min-h-[44px] min-w-[44px] flex items-center justify-center rounded-md text-slate-300 hover:text-white hover:bg-slate-800 border border-transparent hover:border-slate-700 transition-colors"
-            title="Download document"
-          >
-            <Download className="w-4 h-4 text-amber-400" />
-          </button>
+          {result.pdfUrl ? (
+            <a
+              href={result.pdfUrl.split('#')[0]}
+              className="min-h-[44px] min-w-[44px] flex items-center justify-center rounded-md text-slate-300 hover:text-white hover:bg-slate-800 border border-transparent hover:border-slate-700 transition-colors"
+              title="Download document"
+            >
+              <Download className="w-4 h-4 text-amber-400" />
+            </a>
+          ) : null}
           <button
             onClick={onClose}
             className="min-h-[44px] min-w-[44px] flex items-center justify-center rounded-md text-slate-300 hover:text-white hover:bg-slate-800 border border-transparent hover:border-slate-700 transition-colors"
@@ -139,14 +157,25 @@ export default function SplitViewer({ result, aiSummary, onClose }: Props) {
             )}
 
             {/* Compliance Hazard Banner */}
-            {result.category === 'inspection-report' && (
+            {result.findingStatus === 'open' && (
+              <div className="p-3 bg-red-50 border border-red-300 border-l-4 border-l-red-600 rounded-md" role="alert">
+                <div className="flex items-center gap-1.5 text-red-950 font-mono text-[11px] font-black uppercase tracking-wider mb-1">
+                  <AlertTriangle className="w-4 h-4 text-red-700" />
+                  DEFICIENCY DETECTED
+                </div>
+                <p className="text-xs font-semibold text-red-950 leading-relaxed">
+                  {hasDeficiency && deficiencyText ? deficiencyText : result.snippet}
+                </p>
+              </div>
+            )}
+            {result.findingStatus === 'unverified' && (
               <div className="p-3 bg-amber-500/10 border border-amber-500/80 border-l-4 border-l-amber-600 rounded-md">
                 <div className="flex items-center gap-1.5 text-amber-950 font-mono text-[11px] font-black uppercase tracking-wider mb-1">
                   <AlertTriangle className="w-4 h-4 text-amber-600" />
-                  ACTIVE COMPLIANCE DEFICIENCY
+                  REQUIRES VERIFICATION
                 </div>
                 <p className="text-xs font-semibold text-amber-950 leading-relaxed">
-                  Correction required per IBC 2021 egress clearance. Field correction must be confirmed by inspector prior to Certificate of Occupancy.
+                  The inspection text does not establish whether this finding is still unresolved.
                 </p>
               </div>
             )}
@@ -196,8 +225,9 @@ export default function SplitViewer({ result, aiSummary, onClose }: Props) {
                 PAGE <span className="text-amber-400 font-extrabold">{page}</span>
               </span>
               <button
-                onClick={() => setPage((p) => p + 1)}
-                className="min-h-[40px] min-w-[40px] flex items-center justify-center rounded-md text-slate-300 hover:text-white hover:bg-slate-800 transition-colors"
+                onClick={() => setPage((p) => (lastPage ? Math.min(lastPage, p + 1) : p + 1))}
+                disabled={lastPage !== undefined && page >= lastPage}
+                className="min-h-[40px] min-w-[40px] flex items-center justify-center rounded-md text-slate-300 hover:text-white hover:bg-slate-800 transition-colors disabled:opacity-40"
                 title="Next page"
               >
                 <ChevronRight className="w-4 h-4" />
@@ -209,107 +239,26 @@ export default function SplitViewer({ result, aiSummary, onClose }: Props) {
           </div>
 
           {/* PDF Page Display */}
-          <div className="flex-1 overflow-auto flex items-start justify-center p-4 sm:p-8">
-            <div
-              style={{ transform: `scale(${zoom})`, transformOrigin: 'top center' }}
-              className="transition-transform duration-150"
-            >
-              <MockPdfPage
-                lines={mockPage?.lines ?? generateGenericPage(result)}
-                highlightLines={mockPage?.highlightLines ?? [4, 5, 6]}
-                page={page}
-                documentName={result.documentName}
+          <div className="flex-1 overflow-hidden bg-slate-800">
+            {pdfSrc ? (
+              <iframe
+                key={pdfSrc}
+                title={result.documentName}
+                src={pdfSrc}
+                className="w-full h-full bg-white"
+                style={{ transform: `scale(${zoom})`, transformOrigin: 'top center' }}
               />
-            </div>
+            ) : (
+              <div className="h-full overflow-auto p-6 text-sm text-slate-200">
+                <p className="font-mono text-xs uppercase tracking-wider text-amber-300 mb-3">
+                  Original PDF is not available for this result
+                </p>
+                <p className="text-slate-100 leading-relaxed">{result.snippet}</p>
+              </div>
+            )}
           </div>
         </div>
       </div>
     </div>
   );
-}
-
-function MockPdfPage({
-  lines,
-  highlightLines,
-  page,
-  documentName,
-}: {
-  lines: string[];
-  highlightLines: number[];
-  page: number;
-  documentName: string;
-}) {
-  return (
-    <div
-      className="bg-white shadow-2xl rounded-sm border-2 border-slate-300"
-      style={{ width: '612px', minHeight: '792px', padding: '64px 64px 72px' }}
-    >
-      {/* Document header bar */}
-      <div className="border-b-2 border-slate-900 pb-3 mb-6 flex justify-between items-baseline font-mono">
-        <p className="text-[11px] text-slate-900 uppercase tracking-widest font-extrabold">{documentName}</p>
-        <span className="text-[10px] text-slate-600 font-bold uppercase">FIELD SPECIFICATION ARCHIVE</span>
-      </div>
-
-      {/* Content lines */}
-      <div className="space-y-1 font-mono text-[13px] leading-relaxed">
-        {lines.map((line, i) => {
-          const isHighlighted = highlightLines.includes(i);
-          if (line === '') return <div key={i} className="h-3" />;
-          const isSectionHeader = /^[A-Z\s]+$/.test(line) && line.length > 3 && !line.includes('(');
-          const isSubHeader = /^\d{4}(\.\d+)*\s/.test(line);
-          return (
-            <div
-              key={i}
-              className={`px-2 -mx-2 rounded-xs transition-colors ${
-                isHighlighted
-                  ? 'bg-amber-300/80 border-l-4 border-amber-600 pl-3 -ml-5 py-0.5 text-slate-950 font-bold'
-                  : ''
-              }`}
-            >
-              <span
-                className={
-                  isSectionHeader
-                    ? 'font-bold text-slate-950 tracking-wide text-sm'
-                    : isSubHeader
-                    ? 'font-semibold text-slate-900'
-                    : isHighlighted
-                    ? 'text-slate-950 font-semibold'
-                    : 'text-slate-800'
-                }
-              >
-                {line}
-              </span>
-            </div>
-          );
-        })}
-      </div>
-
-      {/* Page footer */}
-      <div className="mt-12 pt-4 border-t border-slate-200 flex justify-between items-center font-mono text-[11px] text-slate-600">
-        <span>BUILDSURE VERIFIED</span>
-        <span className="font-bold text-slate-950">PAGE {page}</span>
-      </div>
-    </div>
-  );
-}
-
-function generateGenericPage(result: SearchResult): string[] {
-  return [
-    result.documentName.toUpperCase(),
-    '',
-    result.section.split('—')[0].trim().toUpperCase(),
-    '',
-    result.section,
-    result.snippet.slice(0, 80),
-    result.snippet.slice(80, 160),
-    result.snippet.slice(160, 240) || '',
-    result.snippet.slice(240) || '',
-    '',
-    'Additional provisions may apply. Refer to referenced standards',
-    'for complete compliance requirements.',
-    '',
-    'All measurements in imperial and SI units per Table 1004.1.2.',
-    '',
-    '(continued on next page)',
-  ];
 }
