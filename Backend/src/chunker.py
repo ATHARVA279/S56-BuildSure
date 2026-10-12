@@ -5,9 +5,11 @@ Every created chunk retains metadata:
         "id":          "building_code_structural__chunk_003",
         "doc_id":      "building_code_structural",
         "text":        "<document title>\\nSection 4.2 Rebar Spacing\\n<body>",
+        "quote":       "<body only, used for citations>",
         "source":      "building_code_structural.pdf",
         "file_name":   "building_code_structural.pdf",
         "page_number": 3,
+        "page_end":    3,
         "section":     "Section 4.2 Rebar Spacing",
         "section_id":  "4.2",
         "project_id":  "global" | "alpha",
@@ -21,11 +23,15 @@ from typing import Optional
 
 from src.config import CHUNK_OVERLAP, CHUNK_SIZE
 
-# Matches the start of a clause: "Section 4.2 Title", "Clause CW-3 Title", "Finding A-1 Title"
+# Matches the start of a clause: "Section 4.2 Title", "Clause CW-3 Title", "Finding A-1 Title".
+# The id cannot end in a trailing dot, so "Section 4.2 of the code" is not split
+# into a fake heading when a sentence merely mentions a clause.
 HEADING_RE = re.compile(
-    r"^(Section|Clause|Finding|Article|Part|Chapter)\s+([A-Za-z0-9.\-]+)\s*(.*?)$",
+    r"^(Section|Clause|Finding|Article|Part|Chapter)\s+([A-Za-z0-9]+(?:[.\-][A-Za-z0-9]+)*)\s*(.*?)$",
     re.IGNORECASE,
 )
+NUMBERED_HEADING_RE = re.compile(r"^(\d{1,4}(?:\.\d+)+)\s+(\S.*?)\s*$")
+CODED_HEADING_RE = re.compile(r"^([A-Z]{1,6}-\d+[A-Za-z0-9]*)\s+(\S.*?)\s*$")
 
 # Standardize doc types
 _VALID_DOC_TYPES = {"building_code", "spec", "inspection_report"}
@@ -51,18 +57,43 @@ def _normalize_doc_type(raw_type: Optional[str]) -> str:
     return _TYPE_NORMALIZER.get(lowered, "building_code")
 
 
+def _match_heading(line: str):
+    """Return (kind, section_id, title) for known heading styles, else None.
+
+    The labeled form (Section / Clause / Finding) is tried first so the sample
+    documents keep their existing section ids. Numbered and coded headings
+    cover documents that omit the label word.
+    """
+    stripped = line.strip()
+    match = HEADING_RE.match(stripped)
+    if match:
+        kind, section_id, title = match.groups()
+        title = (title or "").strip()
+        # A real heading title is empty or starts with a capital letter.
+        # Lowercase continuations ("Section 4.2 of the code") stay in the body.
+        if title and (not title[0].isalpha() or title[0].islower() or "status:" in title.lower()):
+            return None
+        return kind, section_id, title
+    numbered = NUMBERED_HEADING_RE.match(stripped)
+    if numbered:
+        return "Section", numbered.group(1), numbered.group(2).strip()
+    coded = CODED_HEADING_RE.match(stripped)
+    if coded:
+        return "Clause", coded.group(1), coded.group(2).strip()
+    return None
+
+
 def _split_into_sections(text: str) -> list[dict]:
     """Return [{'section', 'section_id', 'body'}] for each heading found."""
     sections = []
     current = None
     for line in text.splitlines():
-        match = HEADING_RE.match(line.strip())
+        match = _match_heading(line)
         if match:
             if current:
                 sections.append(current)
-            kind, section_id, title = match.groups()
-            title_clean = title.strip()
-            label = f"{kind} {section_id} {title_clean}".strip()
+            kind, section_id, title = match
+            label = f"{kind} {section_id} {title}".strip()
             current = {
                 "section": label,
                 "section_id": section_id,
@@ -76,6 +107,40 @@ def _split_into_sections(text: str) -> list[dict]:
         {"section": s["section"], "section_id": s["section_id"], "body": " ".join(s["lines"])}
         for s in sections
     ]
+
+
+def _sections_on_page(page_text: str) -> tuple[str, list[dict]]:
+    """Split one page. Text before the first heading is returned separately.
+
+    That leading text continues the previous page's section when a clause
+    crosses a page boundary. It is not discarded.
+    """
+    leading: list[str] = []
+    current = None
+    sections = []
+    for line in page_text.splitlines():
+        match = _match_heading(line)
+        if match:
+            if current:
+                sections.append(current)
+            kind, section_id, title = match
+            current = {
+                "section": f"{kind} {section_id} {title}".strip(),
+                "section_id": section_id,
+                "lines": [],
+            }
+        elif current is not None:
+            if line.strip():
+                current["lines"].append(line.strip())
+        elif line.strip():
+            leading.append(line.strip())
+    if current:
+        sections.append(current)
+    bodies = [
+        {"section": s["section"], "section_id": s["section_id"], "body": " ".join(s["lines"])}
+        for s in sections
+    ]
+    return " ".join(leading), bodies
 
 
 def _split_long_text(body: str, size: int, overlap: int) -> list[str]:
@@ -108,8 +173,28 @@ def chunk_document(
     resolved_project_id = project_id or doc.get("project_id", "global")
     resolved_scope = scope or doc.get("scope", "global")
     resolved_doc_type = _normalize_doc_type(doc_type or doc.get("doc_type"))
+    page_count = int(doc.get("page_count") or 0)
 
     chunks = []
+
+    def append_piece(section: dict, piece: str, page_num: int) -> None:
+        chunks.append({
+            "id": f"{stem}__chunk_{len(chunks):03d}",
+            "doc_id": stem,
+            "text": f"{title}\n{section['section']}\n{piece}",
+            "quote": piece,
+            "source": filename,
+            "file_name": filename,
+            "title": title,
+            "page_number": page_num,
+            "page_end": page_num,
+            "page_count": page_count or page_num,
+            "section": section["section"],
+            "section_id": section["section_id"],
+            "project_id": resolved_project_id,
+            "scope": resolved_scope,
+            "doc_type": resolved_doc_type,
+        })
 
     # If the document contains structured page data (e.g. from PDF loader)
     if "pages" in doc and doc["pages"]:
@@ -120,47 +205,32 @@ def chunk_document(
             if not page_text:
                 continue
 
-            sections = _split_into_sections(page_text)
-            if not sections:
-                # No heading on this page: use previous section or page label
+            leading, sections = _sections_on_page(page_text)
+            if leading:
+                if last_section:
+                    target = last_section
+                else:
+                    target = {
+                        "section": f"{title} (Page {page_num})",
+                        "section_id": f"P{page_num}",
+                    }
+                for piece in _split_long_text(leading, size, overlap):
+                    append_piece(target, piece, page_num)
+
+            if not sections and not leading:
                 fallback_section = last_section or {
                     "section": f"{title} (Page {page_num})",
                     "section_id": f"P{page_num}",
                 }
                 for piece in _split_long_text(page_text, size, overlap):
-                    chunks.append({
-                        "id": f"{stem}__chunk_{len(chunks):03d}",
-                        "doc_id": stem,
-                        "text": f"{title}\n{fallback_section['section']}\n{piece}",
-                        "source": filename,
-                        "file_name": filename,
-                        "title": title,
-                        "page_number": page_num,
-                        "section": fallback_section["section"],
-                        "section_id": fallback_section["section_id"],
-                        "project_id": resolved_project_id,
-                        "scope": resolved_scope,
-                        "doc_type": resolved_doc_type,
-                    })
-            else:
-                for sec in sections:
-                    last_section = sec
-                    body = sec["body"] or sec["section"]
-                    for piece in _split_long_text(body, size, overlap):
-                        chunks.append({
-                            "id": f"{stem}__chunk_{len(chunks):03d}",
-                            "doc_id": stem,
-                            "text": f"{title}\n{sec['section']}\n{piece}",
-                            "source": filename,
-                            "file_name": filename,
-                            "title": title,
-                            "page_number": page_num,
-                            "section": sec["section"],
-                            "section_id": sec["section_id"],
-                            "project_id": resolved_project_id,
-                            "scope": resolved_scope,
-                            "doc_type": resolved_doc_type,
-                        })
+                    append_piece(fallback_section, piece, page_num)
+                continue
+
+            for sec in sections:
+                last_section = {"section": sec["section"], "section_id": sec["section_id"]}
+                body = sec["body"] or sec["section"]
+                for piece in _split_long_text(body, size, overlap):
+                    append_piece(sec, piece, page_num)
     else:
         # Fallback for plain text document without explicit pages
         page_num = int(doc.get("page_number", 1))
@@ -172,20 +242,7 @@ def chunk_document(
         for sec in sections:
             body = sec["body"] or sec["section"]
             for piece in _split_long_text(body, size, overlap):
-                chunks.append({
-                    "id": f"{stem}__chunk_{len(chunks):03d}",
-                    "doc_id": stem,
-                    "text": f"{title}\n{sec['section']}\n{piece}",
-                    "source": filename,
-                    "file_name": filename,
-                    "title": title,
-                    "page_number": page_num,
-                    "section": sec["section"],
-                    "section_id": sec["section_id"],
-                    "project_id": resolved_project_id,
-                    "scope": resolved_scope,
-                    "doc_type": resolved_doc_type,
-                })
+                append_piece(sec, piece, page_num)
 
     return chunks
 

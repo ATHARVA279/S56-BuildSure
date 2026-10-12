@@ -24,6 +24,10 @@ from typing import BinaryIO, Optional, Union
 
 from src.config import DOCS_DIR
 
+
+class DocumentLoadError(ValueError):
+    """Raised when a file cannot be parsed as a PDF."""
+
 # Maps raw document header types to standardized labels
 _DOC_TYPE_LABELS = {
     "building code": "building_code",
@@ -76,7 +80,11 @@ def load_pdf(
         stream = file_or_path
         filename = filename or "uploaded_document.pdf"
 
-    reader = PdfReader(stream)
+    try:
+        reader = PdfReader(stream)
+    except Exception as exc:
+        raise DocumentLoadError("The file is not a readable PDF.") from exc
+
     pages = []
     full_text_parts = []
 

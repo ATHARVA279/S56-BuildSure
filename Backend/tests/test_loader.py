@@ -37,3 +37,21 @@ def test_sample_docs_load():
     docs = load_documents()
     assert len(docs) >= 1
     assert all(d["text"] and d["source"].endswith(".txt") for d in docs)
+
+
+def test_pdf_pages_are_one_based():
+    from src.loader import load_pdf
+    from src.pdf_util import build_pdf_pages
+
+    pdf = build_pdf_pages(["Page one EXITWIDTHTOKEN", "Page two REBARTOKEN"])
+    doc = load_pdf(pdf, filename="sample.pdf")
+    assert [page["page_number"] for page in doc["pages"]] == [1, 2]
+    assert "EXITWIDTHTOKEN" in doc["pages"][0]["text"]
+    assert "REBARTOKEN" in doc["pages"][1]["text"]
+
+
+def test_malformed_pdf_raises(tmp_path):
+    from src.loader import DocumentLoadError, load_pdf
+
+    with pytest.raises(DocumentLoadError):
+        load_pdf(b"%PDF-1.4\nthis is not a pdf", filename="broken.pdf")
