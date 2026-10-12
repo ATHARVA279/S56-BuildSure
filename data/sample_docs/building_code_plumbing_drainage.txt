@@ -1,0 +1,24 @@
+BUILDSURE SAMPLE BUILDING CODE - PART 10: PLUMBING AND DRAINAGE
+Document type: building code
+NOTE: Fictional sample content for demonstration only. Not a real regulation.
+
+Section 10.1 Scope
+This part covers water supply, soil and waste pipework, and surface water drainage within buildings and their sites.
+
+Section 10.2 Drain Gradient
+Underground foul drains of 100 mm diameter shall be laid at a gradient of not less than 1 in 40. Drains of 150 mm diameter shall be laid at not less than 1 in 60.
+
+Section 10.3 Test Pressure
+Water supply pipework shall be pressure tested at 1.5 times the working pressure, and not less than 10 bar, for at least 30 minutes with no visible leakage or pressure drop before concealment.
+
+Section 10.4 Pipe Cover
+Underground water pipes shall have at least 750 mm of cover to protect against frost and traffic. Drainage pipes under roads shall have at least 900 mm of cover.
+
+Section 10.5 Inspection Chambers
+Inspection chambers shall be provided at every change of direction or gradient and at junctions. The maximum distance between chambers on a straight run is 45 m.
+
+Section 10.6 Water Storage
+Domestic cold water storage tanks shall be covered, insulated and fitted with an overflow pipe of at least 25 mm diameter. Tanks shall be cleaned and inspected every 6 months.
+
+Section 10.7 Hot Water Temperature
+Stored hot water shall be kept at 60 degrees Celsius or above. Water delivered at taps in public washrooms shall not exceed 43 degrees Celsius.

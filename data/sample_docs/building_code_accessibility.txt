@@ -1,0 +1,24 @@
+BUILDSURE SAMPLE BUILDING CODE - PART 8: STAIRS, RAMPS AND ACCESSIBILITY
+Document type: building code
+NOTE: Fictional sample content for demonstration only. Not a real regulation.
+
+Section 8.1 Scope
+This part sets minimum dimensions for stairs, ramps, handrails and accessible routes in buildings open to the public or to employees.
+
+Section 8.2 Stair Dimensions
+Stair risers shall be between 150 mm and 180 mm high and treads shall be at least 280 mm deep. All risers in one flight shall be equal. The clear width of a stair shall be at least 1.2 m.
+
+Section 8.3 Stair Headroom and Landings
+Headroom over stairs and landings shall be at least 2.1 m. A landing shall be provided after every 12 risers, and the landing length shall be at least equal to the stair width.
+
+Section 8.4 Handrails
+Handrails shall be fitted on both sides of stairs wider than 1.5 m, and on at least one side of narrower stairs. The top of the handrail shall be between 900 mm and 1000 mm above the stair nosing line.
+
+Section 8.5 Ramp Gradient
+The gradient of an accessible ramp shall not be steeper than 1 in 12. Ramps rising more than 750 mm shall have a landing every 9 m of ramp length.
+
+Section 8.6 Ramp Width and Surface
+An accessible ramp shall be at least 1.2 m wide between handrails and shall have a slip-resistant surface. A raised edge of at least 100 mm shall be provided along open sides.
+
+Section 8.7 Accessible Doors
+Doors on accessible routes shall have a clear opening width of at least 900 mm. Door thresholds shall not be higher than 15 mm.

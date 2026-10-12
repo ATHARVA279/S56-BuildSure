@@ -1,0 +1,24 @@
+BUILDSURE SAMPLE BUILDING CODE - PART 12: SITE WELFARE AND PROTECTIVE EQUIPMENT
+Document type: building code
+NOTE: Fictional sample content for demonstration only. Not a real regulation.
+
+Section 12.1 Scope
+This part applies to all construction sites and sets minimum welfare facilities and personal protective equipment (PPE) requirements.
+
+Section 12.2 Head Protection
+Safety helmets shall be worn by all persons on site, except in site offices and welfare areas. Helmets shall be replaced after any significant impact or after 5 years from the date of manufacture.
+
+Section 12.3 Foot Protection
+Safety footwear with steel or composite toe caps and puncture-resistant soles shall be worn at all times in work areas.
+
+Section 12.4 Eye and Hearing Protection
+Eye protection is required when cutting, grinding or chipping. Hearing protection is required wherever noise exceeds 85 dB(A) over an 8-hour period.
+
+Section 12.5 First Aid
+A first aid box shall be provided for every 25 workers, and a trained first aider shall be present on site whenever more than 5 persons are working. First aid boxes shall be checked monthly.
+
+Section 12.6 Toilets and Washing
+There shall be at least one toilet for every 15 workers and washing facilities with hot and cold water close to the toilets. Facilities shall be cleaned daily.
+
+Section 12.7 Drinking Water
+A supply of wholesome drinking water shall be provided at accessible points. Where temperatures exceed 35 degrees Celsius, shaded rest areas shall also be provided.

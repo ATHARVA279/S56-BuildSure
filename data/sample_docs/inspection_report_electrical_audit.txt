@@ -1,0 +1,27 @@
+ELECTRICAL AND TEMPORARY WORKS AUDIT - TOWER B
+Document type: inspection report
+Report no: IR-E-003
+Date: 30 September 2026 (fictional)
+Inspector: P. Desai (fictional)
+NOTE: Fictional sample content for demonstration only.
+
+Finding E-1 RCD in Kitchens
+Socket outlets in the Level 4 show-apartment kitchen are protected by 30 mA RCDs. This meets Section 9.3 of the building code but does not meet Clause EL-2 of the project specification, which requires 10 mA in kitchens. Status: open. Action: replace with 10 mA devices.
+
+Finding E-2 Cable Burial Depth
+Buried power cable to the site cabin was found at a depth of 650 mm. This satisfies the 600 mm minimum in Section 9.4 but not the 750 mm required by Clause EL-1 for Tower B. Status: open. Action: re-lay the cable at the specified depth.
+
+Finding E-3 Earth Resistance
+Main earth electrode resistance was measured at 1.8 ohms, within the 2 ohm limit in Clause EL-3. Status: closed.
+
+Finding E-4 Distribution Board Rating
+The floor distribution board on Level 3 was found with an ingress rating of IP54 and no spare ways. Clause EL-5 requires IP55 and 20 percent spare ways. Status: open. Action: board to be replaced.
+
+Finding E-5 Weekly RCD Test Log
+The weekly RCD test log was up to date, with entries for each of the last 8 weeks, as required by Section 9.3. Status: closed.
+
+Finding E-6 First Aid Provision
+The site had one first aid box for 40 workers. Section 12.5 requires one box for every 25 workers. Status: open. Action: provide a second first aid box today.
+
+Finding E-7 Welfare Facilities
+Two toilets were provided for 38 workers. Section 12.6 requires one toilet for every 15 workers, so at least three are needed. Status: open. Action: add one temporary toilet unit.

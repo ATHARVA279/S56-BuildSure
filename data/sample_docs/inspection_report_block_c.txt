@@ -1,0 +1,24 @@
+SITE INSPECTION REPORT - BLOCK C, LEVELS 1 TO 3
+Document type: inspection report
+Report no: IR-C-021
+Date: 26 September 2026 (fictional)
+Inspector: A. Fernandes (fictional)
+NOTE: Fictional sample content for demonstration only.
+
+Finding C-1 Stair Riser Height
+Risers in Stair 1 were measured between 165 mm and 195 mm. One flight has risers of 195 mm, above the 180 mm maximum in Section 8.2, and risers within the flight are unequal. Status: open. Action: contractor to correct the flight and re-measure.
+
+Finding C-2 Handrail Height
+Handrails on Stair 1 were measured at 920 mm above the nosing line, which complies with Section 8.4. Status: closed.
+
+Finding C-3 Ramp Gradient
+The accessible ramp at the main entrance was measured at a gradient of 1 in 10. Section 8.5 requires a gradient no steeper than 1 in 12. Status: open. Action: ramp to be rebuilt with a longer run.
+
+Finding C-4 Masonry Mortar
+Mortar on the external wall at grid line 4 was found mixed at a ratio of 1:6. Section 5.3 and Clause MF-2 both require 1:4 for external masonry. Status: open. Action: affected panel to be taken down and rebuilt.
+
+Finding C-5 Pipe Pressure Test
+The water supply pipework on Level 2 was pressure tested at 10 bar for 30 minutes with no pressure drop, in line with Section 10.3. Status: closed.
+
+Finding C-6 Drain Gradient
+The 100 mm foul drain to the east boundary was measured at a gradient of 1 in 30, which is steeper than the 1 in 40 minimum and is acceptable. Status: closed.

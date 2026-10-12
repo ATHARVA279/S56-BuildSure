@@ -1,0 +1,22 @@
+PROJECT SPECIFICATION - WATERPROOFING, TOWER B
+Document type: project specification
+Project: Harbour View Tower B (fictional)
+NOTE: Fictional sample content for demonstration only.
+
+Clause WP-1 Basement Waterproofing
+Basement walls and the raft slab shall be waterproofed with a bituminous membrane of at least 4 mm thickness, lapped 150 mm at joints and protected by a 50 mm protection screed.
+
+Clause WP-2 Roof Waterproofing
+The roof slab shall be waterproofed with a two-layer membrane system with a minimum total thickness of 6 mm, taken up vertical upstands to a height of at least 300 mm.
+
+Clause WP-3 Roof Slope
+The finished roof surface shall have a fall of at least 1 in 80 towards outlets. Ponding of more than 5 mm depth after 24 hours is not acceptable.
+
+Clause WP-4 Flood Test
+All wet areas and the roof shall be flood tested to a depth of 50 mm for 48 hours before tiling or screeding, with no leakage to the floor below.
+
+Clause WP-5 Joint Sealants
+Expansion joints shall be sealed with polyurethane sealant over a closed-cell backing rod. Sealant depth shall be half the joint width, and not less than 10 mm.
+
+Clause WP-6 Wet Area Upturn
+Waterproofing in bathrooms shall be turned up the walls to a height of at least 300 mm, and to 1800 mm in shower areas.

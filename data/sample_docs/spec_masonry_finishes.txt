@@ -1,0 +1,25 @@
+PROJECT SPECIFICATION - MASONRY AND FINISHES, TOWER B
+Document type: project specification
+Project: Harbour View Tower B (fictional)
+NOTE: Fictional sample content for demonstration only.
+
+Clause MF-1 Block Strength
+Concrete blocks for external walls shall have a minimum compressive strength of 7.5 MPa. Blocks for internal partitions shall have a minimum strength of 3.5 MPa.
+
+Clause MF-2 Mortar Mix
+This clause overrides Section 5.3 of the sample building code for external walls of Tower B. Mortar for all external masonry shall have a cement to sand ratio of 1:4 and shall include a waterproofing admixture at the manufacturer's recommended dose.
+
+Clause MF-3 Partition Thickness
+Internal partition walls shall be 150 mm thick in common corridors and 100 mm thick inside apartments.
+
+Clause MF-4 Plaster Thickness
+Internal plaster shall be applied in two coats to a total thickness of 15 mm. External plaster shall be applied in two coats to a total thickness of 20 mm.
+
+Clause MF-5 Plaster Curing
+External plaster shall be kept damp for at least 7 days. In ambient temperatures above 35 degrees Celsius, curing shall be extended to 10 days.
+
+Clause MF-6 Floor Tile Fixing
+Floor tiles shall be fixed with polymer-modified adhesive over a screed cured for at least 14 days. Tile joints shall be 3 mm wide and grouted after 24 hours.
+
+Clause MF-7 Paint System
+External walls shall receive one coat of primer and two coats of weather-resistant acrylic emulsion. Application shall not take place when relative humidity exceeds 85 percent.

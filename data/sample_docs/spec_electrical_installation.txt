@@ -1,0 +1,22 @@
+PROJECT SPECIFICATION - ELECTRICAL INSTALLATION, TOWER B
+Document type: project specification
+Project: Harbour View Tower B (fictional)
+NOTE: Fictional sample content for demonstration only.
+
+Clause EL-1 Cable Burial Depth
+This clause overrides Section 9.4 of the sample building code for the Tower B site. Buried power cables shall be laid at least 750 mm deep in non-road areas and 1000 mm deep under roads, with warning tape 200 mm above the cable.
+
+Clause EL-2 RCD Protection in Wet Areas
+Socket outlets in bathrooms, kitchens and external areas shall be protected by an RCD with a rated tripping current not exceeding 10 mA. This is stricter than the 30 mA limit in Section 9.3 of the sample building code.
+
+Clause EL-3 Earth Resistance
+Earth electrode resistance for the main earthing system shall not exceed 2 ohms, measured and recorded before energising.
+
+Clause EL-4 Conduit
+All concealed wiring shall be run in rigid PVC conduit of not less than 20 mm diameter. Conduit shall not be filled more than 40 percent of its cross-section.
+
+Clause EL-5 Distribution Boards
+Floor distribution boards shall have an ingress rating of at least IP55, a minimum of 20 percent spare ways, and a labelled circuit schedule fixed inside the door.
+
+Clause EL-6 Testing and Handover
+Insulation resistance of every circuit shall be tested at 500 V and shall not be less than 1 megohm. Test certificates shall be submitted to the engineer before handover.

@@ -26,7 +26,8 @@ def fake_embed(texts):
 def test_ingest_stores_every_chunk_of_the_sample_docs():
     col = FakeCollection()
     summary = ingest_script.ingest(embed_fn=fake_embed, collection=col)
-    assert summary["documents"] == 8
+    n_files = len(list((ROOT / "data" / "sample_docs").glob("*.txt")))
+    assert summary["documents"] == n_files >= 8
     assert summary["chunks"] == summary["stored"] == col.count()
     assert summary["chunks"] > summary["documents"]
 

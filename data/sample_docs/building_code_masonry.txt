@@ -1,0 +1,24 @@
+BUILDSURE SAMPLE BUILDING CODE - PART 5: MASONRY
+Document type: building code
+NOTE: Fictional sample content for demonstration only. Not a real regulation.
+
+Section 5.1 Scope
+This part applies to load-bearing and non-load-bearing masonry walls built from clay brick, concrete block or stone in buildings up to 4 storeys.
+
+Section 5.2 Minimum Wall Thickness
+Load-bearing external walls shall be at least 230 mm thick. Non-load-bearing internal partition walls shall be at least 100 mm thick.
+
+Section 5.3 Mortar Mix
+Mortar for load-bearing masonry shall have a cement to sand ratio of 1:4 by volume. Mortar for non-load-bearing partitions may use a ratio of 1:6. Mortar shall be used within 2 hours of mixing.
+
+Section 5.4 Joint Thickness
+Mortar joints shall be between 8 mm and 12 mm thick. Horizontal joints shall be fully filled and vertical joints shall be filled for the full height of the unit.
+
+Section 5.5 Wall Height Limit
+The height of an unsupported masonry wall shall not exceed 20 times its thickness. Walls exceeding this ratio shall be braced by piers, cross walls or a ring beam.
+
+Section 5.6 Damp-Proof Course
+A damp-proof course shall be provided at least 150 mm above finished ground level and shall extend through the full thickness of the wall.
+
+Section 5.7 Curing of Masonry
+Newly built masonry shall be kept damp for at least 7 days and protected from rain and direct sun during that period.
