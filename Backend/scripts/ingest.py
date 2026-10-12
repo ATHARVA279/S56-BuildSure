@@ -6,9 +6,9 @@ Usage (from the repo root):
 Re-running is safe: the collection is wiped and rebuilt each time, so you never
 get duplicate chunks. Run it again whenever you add or edit documents.
 """
-import sys
+import sys 
 import time
-from pathlib import Path
+from pathlib import Path 
 
 # Make `import src...` work when run as `python scripts/ingest.py`.
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
