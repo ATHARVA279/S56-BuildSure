@@ -11,9 +11,9 @@ report, which is stored on Project Beta so project isolation can be checked.
 Original text is wrapped in a PDF so the viewer can open a real file.
 """
 import argparse
-import sys
+import sys 
 import uuid
-from datetime import datetime, timezone
+from datetime import datetime, timezone 
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
@@ -55,7 +55,7 @@ def already_indexed(file_name: str, project_id: str) -> bool:
     document = get_documents_collection().find_one(
         {"file_name": file_name, "project_id": project_id, "processing_status": "indexed"}
     )
-    return document is not None
+    return document is not None 
 
 
 def main() -> int:
