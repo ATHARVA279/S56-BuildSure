@@ -1,5 +1,5 @@
-# Local demo notes. Not part of the shared repo.
-docs/DEMO_AND_VIVA.md
+# Local notes. Not part of the shared repository.
+docs/
 
 # Secrets. .env.example is safe to commit; real credentials are not.
 .env
