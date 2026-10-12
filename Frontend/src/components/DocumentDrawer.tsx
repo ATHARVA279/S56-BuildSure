@@ -8,7 +8,11 @@ interface Props {
   documents: Document[];
   activeProjectId: string;
   projectName: string;
-  onUpload: (file: File) => void;
+  onUpload: (file: File, meta: { scope: 'global' | 'project'; docType: string }) => void;
+  onDelete: (id: string) => void;
+  uploading?: boolean;
+  uploadMessage?: string | null;
+  uploadError?: string | null;
 }
 
 const CATEGORY_LABELS: Record<Document['category'], string> = {
@@ -30,33 +34,39 @@ export default function DocumentDrawer({
   activeProjectId,
   projectName,
   onUpload,
+  onDelete,
+  uploading = false,
+  uploadMessage = null,
+  uploadError = null,
 }: Props) {
   const [dragging, setDragging] = useState(false);
-  const [uploadedFiles, setUploadedFiles] = useState<string[]>([]);
+  const [scope, setScope] = useState<'global' | 'project'>(activeProjectId === 'global' ? 'global' : 'project');
+  const [docType, setDocType] = useState('building_code');
 
   const relevantDocs = documents.filter(
     (d) => d.scope === 'global' || d.projectId === activeProjectId
   );
+
+  const uploadScope: 'global' | 'project' = activeProjectId === 'global' ? 'global' : scope;
 
   const handleDrop = useCallback(
     (e: React.DragEvent) => {
       e.preventDefault();
       setDragging(false);
       const file = e.dataTransfer.files[0];
-      if (file && file.type === 'application/pdf') {
-        setUploadedFiles((prev) => [...prev, file.name]);
-        onUpload(file);
+      if (file && (file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf'))) {
+        onUpload(file, { scope: activeProjectId === 'global' ? 'global' : scope, docType });
       }
     },
-    [onUpload]
+    [onUpload, activeProjectId, scope, docType]
   );
 
   const handleFileInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      setUploadedFiles((prev) => [...prev, file.name]);
-      onUpload(file);
+      onUpload(file, { scope: uploadScope, docType });
     }
+    e.target.value = '';
   };
 
   return (
@@ -118,8 +128,11 @@ export default function DocumentDrawer({
             </div>
             <div className="space-y-1.5">
               {relevantDocs.filter((d) => d.scope === 'global').map((doc) => (
-                <DocumentRow key={doc.id} doc={doc} />
+                <DocumentRow key={doc.id} doc={doc} onDelete={onDelete} />
               ))}
+              {relevantDocs.filter((d) => d.scope === 'global').length === 0 && (
+                <p className="text-[11px] font-mono text-slate-600">No global documents uploaded yet.</p>
+              )}
             </div>
           </div>
 
@@ -132,31 +145,48 @@ export default function DocumentDrawer({
               </div>
               <div className="space-y-1.5">
                 {relevantDocs.filter((d) => d.scope === 'local').map((doc) => (
-                  <DocumentRow key={doc.id} doc={doc} />
+                  <DocumentRow key={doc.id} doc={doc} onDelete={onDelete} />
                 ))}
-                {uploadedFiles.map((name, i) => (
-                  <div
-                    key={`uploaded-${i}`}
-                    className="min-h-[44px] flex items-center gap-3 px-3 py-2 rounded-md border border-amber-400 bg-amber-500/10"
-                  >
-                    <FileText className="w-4 h-4 text-amber-600 shrink-0" />
-                    <div className="flex-1 min-w-0">
-                      <p className="text-xs font-mono font-bold text-amber-950 truncate">{name}</p>
-                      <p className="text-[10px] font-mono text-amber-800 font-semibold uppercase">OCR PROCESSING IN PROGRESS...</p>
-                    </div>
-                    <span className="text-[10px] font-mono font-extrabold bg-amber-400 text-slate-950 px-2 py-0.5 rounded-sm uppercase">
-                      INDEXING
-                    </span>
-                  </div>
-                ))}
+                {relevantDocs.filter((d) => d.scope === 'local').length === 0 && (
+                  <p className="text-[11px] font-mono text-slate-600">No project documents uploaded yet.</p>
+                )}
               </div>
             </div>
           )}
         </div>
 
         {/* Upload Dropzone */}
-        {activeProjectId !== 'global' && (
-          <div className="p-3 sm:p-4 border-t border-slate-300 bg-white shrink-0">
+          <div className="p-3 sm:p-4 border-t border-slate-300 bg-white shrink-0 space-y-2">
+            <div className="grid grid-cols-2 gap-2">
+              <label className="text-[10px] font-mono font-bold uppercase text-slate-700">
+                Scope
+                <select
+                  value={uploadScope}
+                  onChange={(e) => setScope(e.target.value as 'global' | 'project')}
+                  disabled={activeProjectId === 'global' || uploading}
+                  className="mt-1 w-full min-h-[40px] border border-slate-300 rounded-md px-2 text-xs font-mono text-slate-900 bg-white"
+                >
+                  <option value="global">Global</option>
+                  <option value="project">This project</option>
+                </select>
+              </label>
+              <label className="text-[10px] font-mono font-bold uppercase text-slate-700">
+                Document type
+                <select
+                  value={docType}
+                  onChange={(e) => setDocType(e.target.value)}
+                  disabled={uploading}
+                  className="mt-1 w-full min-h-[40px] border border-slate-300 rounded-md px-2 text-xs font-mono text-slate-900 bg-white"
+                >
+                  <option value="building_code">Building code</option>
+                  <option value="specification">Specification</option>
+                  <option value="inspection_report">Inspection report</option>
+                </select>
+              </label>
+            </div>
+            {uploadMessage && <p className="text-[11px] font-mono text-slate-800">{uploadMessage}</p>}
+            {uploadError && <p className="text-[11px] font-mono font-bold text-red-700" role="alert">{uploadError}</p>}
+            {uploading && <p className="text-[11px] font-mono text-amber-800">Indexing the PDF...</p>}
             <label
               htmlFor="pdf-upload"
               onDragOver={(e) => { e.preventDefault(); setDragging(true); }}
@@ -184,15 +214,14 @@ export default function DocumentDrawer({
                 className="hidden"
                 onChange={handleFileInput}
               />
-            </label>
+              </label>
           </div>
-        )}
       </div>
     </>
   );
 }
 
-function DocumentRow({ doc }: { doc: Document }) {
+function DocumentRow({ doc, onDelete }: { doc: Document; onDelete: (id: string) => void }) {
   const [hovered, setHovered] = useState(false);
   const categoryLabel = CATEGORY_LABELS[doc.category];
   const categoryColor = CATEGORY_COLORS[doc.category];
@@ -212,11 +241,15 @@ function DocumentRow({ doc }: { doc: Document }) {
           <span className={`text-[10px] font-mono font-extrabold px-1.5 py-0.2 rounded-xs border uppercase ${categoryColor}`}>
             {categoryLabel}
           </span>
-          <span className="text-[10px] font-mono font-semibold text-slate-700">{doc.pages}P · {doc.size}</span>
+          <span className="text-[10px] font-mono font-semibold text-slate-700">
+            {doc.pages}P · {doc.size}
+            {doc.processingStatus && doc.processingStatus !== 'indexed' ? ` · ${doc.processingStatus.replace(/_/g, ' ')}` : ''}
+          </span>
         </div>
       </div>
       {hovered ? (
         <button
+          onClick={() => onDelete(doc.id)}
           className="min-h-[36px] min-w-[36px] rounded-md flex items-center justify-center text-slate-500 hover:text-red-700 hover:bg-red-50 transition-colors shrink-0"
           title="Delete document"
         >

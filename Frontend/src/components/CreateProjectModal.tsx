@@ -1,25 +1,30 @@
 import { useState } from 'react';
 import { X, MapPin, FolderPlus } from 'lucide-react';
-import type { Project } from '@/types';
 
 interface Props {
   onClose: () => void;
-  onCreate: (project: Project) => void;
+  onCreate: (input: { name: string; location: string }) => Promise<void>;
 }
 
 export default function CreateProjectModal({ onClose, onCreate }: Props) {
   const [name, setName] = useState('');
   const [location, setLocation] = useState('');
+  const [error, setError] = useState<string | null>(null);
+  const [saving, setSaving] = useState(false);
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!name.trim()) return;
-    onCreate({
-      id: `project-${Date.now()}`,
-      name: name.trim(),
-      location: location.trim(),
-    });
-    onClose();
+    if (!name.trim() || saving) return;
+    setSaving(true);
+    setError(null);
+    try {
+      await onCreate({ name: name.trim(), location: location.trim() });
+      onClose();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Could not create the project');
+    } finally {
+      setSaving(false);
+    }
   }
 
   return (
@@ -77,6 +82,12 @@ export default function CreateProjectModal({ onClose, onCreate }: Props) {
             </div>
           </div>
 
+          {error && (
+            <p className="text-xs font-mono font-bold text-red-700" role="alert">
+              {error}
+            </p>
+          )}
+
           <div className="pt-2 flex gap-2.5">
             <button
               type="button"
@@ -87,10 +98,10 @@ export default function CreateProjectModal({ onClose, onCreate }: Props) {
             </button>
             <button
               type="submit"
-              disabled={!name.trim()}
+              disabled={!name.trim() || saving}
               className="min-h-[44px] flex-1 px-4 py-2 rounded-md bg-amber-500 text-slate-950 font-mono font-bold text-xs uppercase tracking-wider hover:bg-amber-400 active:bg-amber-600 disabled:opacity-40 disabled:cursor-not-allowed border border-amber-600 shadow-xs transition-colors"
             >
-              INITIALIZE WORKSPACE
+              {saving ? 'SAVING' : 'INITIALIZE WORKSPACE'}
             </button>
           </div>
         </form>

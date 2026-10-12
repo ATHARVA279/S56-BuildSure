@@ -34,6 +34,19 @@ EMBEDDING_MODEL = "all-MiniLM-L6-v2"
 TOP_K = 4
 SIMILARITY_THRESHOLD = 0.35
 
-# LLM (Groq)
+# LLM (Groq). llama-3.1-8b-instant was removed from Groq's catalog.
 GROQ_API_KEY = os.getenv("GROQ_API_KEY", "")
-LLM_MODEL = "llama-3.1-8b-instant"
+LLM_MODEL = os.getenv("GROQ_MODEL", "openai/gpt-oss-20b")
+
+# Uploads and local fallback store. MongoDB remains the configured database.
+MAX_UPLOAD_BYTES = int(os.getenv("MAX_UPLOAD_BYTES", str(25 * 1024 * 1024)))
+UPLOAD_DIR = ROOT_DIR / "data" / "uploads"
+LOCAL_DB_DIR = ROOT_DIR / "data" / "local_db"
+CORS_ORIGINS = [
+    origin.strip()
+    for origin in os.getenv(
+        "CORS_ORIGINS",
+        "http://localhost:5173,http://127.0.0.1:5173",
+    ).split(",")
+    if origin.strip()
+]
