@@ -1,0 +1,24 @@
+SITE INSPECTION REPORT - TOWER B, LEVEL 3 TRANSFER SLAB
+Document type: inspection report
+Report no: IR-B-007
+Date: 19 September 2026 (fictional)
+Inspector: S. Kulkarni (fictional)
+NOTE: Fictional sample content for demonstration only.
+
+Finding B-1 Rebar Spacing
+Main bars in the Level 3 transfer slab were measured at 175 mm centres in the east bay. Clause CW-3 of the concrete works specification requires a maximum of 150 mm for this slab, so this does not comply, even though it would satisfy the general 200 mm limit in Section 4.2 of the building code. Status: open. Action: contractor to add bars to achieve 150 mm spacing and request re-inspection.
+
+Finding B-2 Concrete Cover
+External face cover was measured at 46 mm, which meets Clause CW-4 requiring 45 mm. Status: closed.
+
+Finding B-3 Curing
+Curing records showed only 5 days of wet curing on the Level 3 slab at an ambient temperature of 36 degrees Celsius. Clause CW-5 requires 10 days above 35 degrees. Status: open. Action: extend curing and submit revised records.
+
+Finding B-4 Excavation Edge Protection
+A barrier around the basement excavation was found only 0.6 m from the edge. Clause EF-3 requires at least 1.0 m. Status: open. Action: relocate barrier immediately.
+
+Finding B-5 Cube Results
+Seven-day cube results for the Level 3 pour averaged 24 MPa, which is consistent with a grade M30 mix reaching its target strength at 28 days. Status: closed.
+
+Finding B-6 Formwork Removal
+Soffit formwork on Level 3 was struck at 8 days. Clause CW-7 requires a minimum of 10 days and 70 percent strength. Status: open. Action: formwork to be re-propped and engineer to review.

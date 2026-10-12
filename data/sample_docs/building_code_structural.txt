@@ -1,0 +1,24 @@
+BUILDSURE SAMPLE BUILDING CODE - PART 4: STRUCTURAL CONCRETE
+Document type: building code
+NOTE: Fictional sample content for demonstration only. Not a real regulation.
+
+Section 4.1 Scope
+This part applies to all reinforced concrete elements in buildings up to 12 storeys, including slabs, beams, columns and footings.
+
+Section 4.2 Rebar Spacing in Slabs
+The centre-to-centre spacing of main reinforcement in a solid slab shall not exceed 200 mm or three times the slab thickness, whichever is smaller. The minimum clear spacing between parallel bars shall not be less than 25 mm or the bar diameter, whichever is greater.
+
+Section 4.3 Rebar Spacing in Beams
+Stirrups in beams shall be spaced at not more than 0.75 times the effective depth of the beam, and never more than 300 mm. Within 2 times the beam depth from a support, stirrup spacing shall not exceed 150 mm.
+
+Section 4.4 Concrete Cover
+Minimum clear cover to reinforcement shall be 20 mm for slabs and walls in dry internal conditions, 30 mm for beams and columns in internal conditions, and 40 mm for any member exposed to weather or soil contact.
+
+Section 4.5 Lap Lengths
+Tension lap splices shall be at least 50 times the bar diameter. Compression lap splices shall be at least 40 times the bar diameter. No more than 50 percent of bars in a section may be lapped at the same location.
+
+Section 4.6 Minimum Slab Thickness
+Solid slabs for floors shall be at least 125 mm thick. Roof slabs not accessible to the public shall be at least 100 mm thick.
+
+Section 4.7 Column Reinforcement
+Longitudinal reinforcement in columns shall be between 0.8 percent and 4 percent of the gross cross-sectional area. A minimum of four bars is required in rectangular columns.

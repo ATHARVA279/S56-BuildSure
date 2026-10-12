@@ -1,0 +1,28 @@
+PROJECT SPECIFICATION - CONCRETE WORKS, TOWER B
+Document type: project specification
+Project: Harbour View Tower B (fictional)
+NOTE: Fictional sample content for demonstration only.
+
+Clause CW-1 Concrete Grade
+Foundations and basement walls shall use grade M35 concrete. Suspended slabs, beams and columns shall use grade M30 concrete. Blinding concrete shall be grade M15.
+
+Clause CW-2 Workability
+Slump at the point of placing shall be 100 mm plus or minus 25 mm for slabs and beams, and 75 mm plus or minus 25 mm for columns. Water shall not be added on site without approval of the engineer.
+
+Clause CW-3 Rebar Spacing for Transfer Slab
+This clause overrides Section 4.2 of the sample building code for the Level 3 transfer slab only. Main reinforcement spacing in the transfer slab shall not exceed 150 mm centre to centre in both directions.
+
+Clause CW-4 Concrete Cover
+Minimum cover for all external faces shall be 45 mm. Cover for basement walls in contact with soil shall be 50 mm. Approved spacers shall be used at a maximum of 1 m centres.
+
+Clause CW-5 Curing
+Exposed concrete surfaces shall be kept continuously moist or covered with curing membrane for at least 7 days. In ambient temperatures above 35 degrees Celsius, curing shall continue for 10 days.
+
+Clause CW-6 Cube Testing
+One set of 3 cubes shall be taken for every 50 cubic metres of concrete or for each day's pour, whichever gives the greater number. Cubes shall be tested at 7 days and 28 days.
+
+Clause CW-7 Formwork Removal
+Soffit formwork to slabs shall not be removed until the concrete has reached 70 percent of its specified strength, and in any case not before 10 days. Props shall be retained for 21 days.
+
+Clause CW-8 Pour Temperature
+Concrete shall not be placed when its temperature at delivery exceeds 32 degrees Celsius.

@@ -1,0 +1,24 @@
+BUILDSURE SAMPLE BUILDING CODE - PART 11: WORKING AT HEIGHT AND SCAFFOLDING
+Document type: building code
+NOTE: Fictional sample content for demonstration only. Not a real regulation.
+
+Section 11.1 Scope
+This part applies to all work where a person could fall 2 m or more, and to all scaffolding erected on construction sites.
+
+Section 11.2 Guardrails
+Working platforms shall have a top guardrail at least 950 mm above the platform, an intermediate rail, and a toe board at least 150 mm high. The gap between rails shall not exceed 470 mm.
+
+Section 11.3 Platform Width
+Working platforms used for materials shall be at least 600 mm wide. Platforms used only for access shall be at least 450 mm wide. Platform boards shall be fully supported with no gaps greater than 25 mm.
+
+Section 11.4 Scaffold Inspection
+Scaffolds shall be inspected by a competent person before first use, at least every 7 days, and after any event likely to affect stability such as high wind or impact. Each inspection shall be recorded on a scaffold tag.
+
+Section 11.5 Ties
+Free-standing scaffolds shall not exceed a height of 4 times their smallest base dimension. Higher scaffolds shall be tied to the structure at intervals not exceeding 4 m vertically and 6 m horizontally.
+
+Section 11.6 Safety Harnesses
+Where guardrails cannot be provided, workers shall wear a full-body harness attached to a certified anchor point. Harnesses shall be inspected before each use and replaced after any arrested fall.
+
+Section 11.7 Wind Limits
+Work on scaffolds shall stop when sustained wind speed exceeds 40 km/h. Sheeted scaffolds shall be assessed for wind loading before sheets are fixed.

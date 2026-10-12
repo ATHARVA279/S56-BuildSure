@@ -1,0 +1,25 @@
+PROJECT SPECIFICATION - EXCAVATION AND FOUNDATIONS, TOWER B
+Document type: project specification
+Project: Harbour View Tower B (fictional)
+NOTE: Fictional sample content for demonstration only.
+
+Clause EF-1 Excavation Depth
+Basement excavation shall extend to formation level of minus 6.5 m relative to ground floor datum. Over-excavation of more than 100 mm shall be reported to the engineer and made good with lean concrete.
+
+Clause EF-2 Shoring
+Excavations deeper than 1.5 m shall be supported by shoring, sheet piling or battering of side slopes. Shoring shall be inspected daily and after rainfall.
+
+Clause EF-3 Edge Protection
+A guardrail or barrier shall be erected at a distance of at least 1.0 m from the edge of any excavation deeper than 1.2 m. Spoil and plant shall be kept at least 2.0 m from the edge.
+
+Clause EF-4 Bearing Capacity Check
+The bearing capacity at formation level shall be verified by the geotechnical engineer before blinding is placed. The minimum acceptable allowable bearing capacity is 250 kN per square metre.
+
+Clause EF-5 Dewatering
+Groundwater shall be kept at least 500 mm below formation level during construction. Pumped water shall be discharged through a silt trap.
+
+Clause EF-6 Backfilling
+Backfill shall be placed in layers not exceeding 200 mm loose thickness and compacted to at least 95 percent of maximum dry density. Backfilling against basement walls shall not begin until the walls have reached 100 percent of specified strength.
+
+Clause EF-7 Pile Tolerance
+Piles shall be positioned within 75 mm of design position in plan and within 1 in 75 of vertical.

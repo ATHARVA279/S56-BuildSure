@@ -1,0 +1,24 @@
+SITE INSPECTION REPORT - BLOCK A, LEVEL 2 SLAB
+Document type: inspection report
+Report no: IR-A-014
+Date: 12 September 2026 (fictional)
+Inspector: R. Menon (fictional)
+NOTE: Fictional sample content for demonstration only.
+
+Finding A-1 Rebar Spacing
+Main bars in the Level 2 slab were measured at 180 mm centres. This complies with Section 4.2 of the sample building code, which permits a maximum of 200 mm. Status: closed.
+
+Finding A-2 Concrete Cover
+Cover at the slab edge was measured at 15 mm in grid line C, below the 20 mm minimum in Section 4.4. Spacers were missing. Status: open. Action: contractor to fit spacers and re-measure before pour approval.
+
+Finding A-3 Fire Door
+The fire door to Stairwell 2 was found wedged open with a wooden block. This is contrary to Section 7.5. Status: closed after the wedge was removed and the contractor was warned.
+
+Finding A-4 Extinguisher Provision
+Two extinguishers were present on Level 2 for a floor area of 380 square metres. This meets Section 7.6, which requires one per 200 square metres. Status: closed.
+
+Finding A-5 Scaffold Tag
+The scaffold on the east elevation carried a tag dated 24 days earlier. Inspection is required every 7 days under Section 11.4. Status: open. Action: scaffold to be inspected and re-tagged immediately; no access until done.
+
+Finding A-6 Temporary Sockets
+Three temporary socket outlets were found without RCD protection, contrary to Section 9.3. Status: open. Action: electrician to fit 30 mA RCDs and record test results.

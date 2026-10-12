@@ -1,0 +1,24 @@
+BUILDSURE SAMPLE BUILDING CODE - PART 9: ELECTRICAL INSTALLATIONS ON SITE
+Document type: building code
+NOTE: Fictional sample content for demonstration only. Not a real regulation.
+
+Section 9.1 Scope
+This part covers temporary and permanent electrical installations in buildings under construction.
+
+Section 9.2 Earthing
+All metallic enclosures, scaffolding and site cabins shall be bonded to a common earth. Earth electrode resistance shall not exceed 5 ohms, measured before energising.
+
+Section 9.3 Residual Current Protection
+Every temporary socket outlet on site shall be protected by a residual current device (RCD) with a rated tripping current not exceeding 30 mA. RCDs shall be tested weekly by pressing the test button and the result logged.
+
+Section 9.4 Cable Protection
+Cables laid on the ground shall be protected against vehicle damage by covers or ducts. Buried cables shall be at least 600 mm deep and marked with warning tape 150 mm above the cable.
+
+Section 9.5 Cable Heights
+Overhead cables crossing site access routes shall be at least 5.5 m above ground. Elsewhere on site, overhead cables shall be at least 3.5 m above ground.
+
+Section 9.6 Distribution Boards
+Distribution boards shall be weatherproof with an ingress rating of at least IP54 and shall be locked. Each outgoing circuit shall be labelled.
+
+Section 9.7 Inspection Interval
+Temporary installations shall be inspected and tested by a competent person at least every 3 months, and after any modification.

@@ -1,0 +1,24 @@
+BUILDSURE SAMPLE BUILDING CODE - PART 7: FIRE SAFETY AND MEANS OF ESCAPE
+Document type: building code
+NOTE: Fictional sample content for demonstration only. Not a real regulation.
+
+Section 7.1 Scope
+This part applies to all residential, commercial and mixed-use buildings and sets minimum requirements for escape routes, fire doors and fire-fighting equipment.
+
+Section 7.2 Exit Width
+The clear width of any exit door or escape corridor shall be at least 1.0 m. In assembly occupancies the minimum clear width is 1.2 m. Door leaves shall open in the direction of escape.
+
+Section 7.3 Travel Distance
+The maximum travel distance from any point in a floor to the nearest exit shall not exceed 30 m in residential buildings and 45 m in commercial buildings with sprinklers. In commercial buildings without sprinklers it shall not exceed 30 m.
+
+Section 7.4 Number of Exits
+Every floor with an occupancy above 50 persons shall have at least two independent exits located remote from each other.
+
+Section 7.5 Fire Doors
+Doors to stairwells and plant rooms shall be fire-rated for at least 60 minutes and fitted with self-closing devices. Fire doors shall never be wedged open.
+
+Section 7.6 Fire Extinguishers
+At least one portable extinguisher shall be provided for every 200 square metres of floor area, with a minimum of one per floor. Extinguishers shall be mounted with the handle no higher than 1.2 m above the floor.
+
+Section 7.7 Emergency Lighting
+Escape routes shall have emergency lighting that operates for at least 90 minutes after mains failure and delivers at least 1 lux along the centre line of the route.
